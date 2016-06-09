@@ -21,9 +21,9 @@ public class Database {
 
         // "try with resources" sulkee resurssin automaattisesti lopuksi
         try (Connection conn = getConnection()) {
-            Statement st = conn.createStatement();
+            Sta
+            // suoritetaan komennottement st = conn.createStatement();
 
-            // suoritetaan komennot
             for (String lause : lauseet) {
                 System.out.println("Running command >> " + lause);
                 st.executeUpdate(lause);
@@ -39,10 +39,10 @@ public class Database {
         ArrayList<String> lista = new ArrayList<>();
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-        lista.add("CREATE TABLE Opiskelija (id integer PRIMARY KEY, nimi varchar(255));");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Platon');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Aristoteles');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Homeros');");
+        lista.add("CREATE DATABASE keskustelupalsta;");
+        lista.add("CREATE TABLE Aihealueet (aihealue_id integer AUTO_INCREMENT, nimi varchar(100), PRIMARY KEY(aihealue_id));");
+        lista.add("CREATE TABLE Ketjut (ketju_id integer AUTO_INCREMENT, aihealue integer, otsikko varchar(100), PRIMARY KEY(ketju_id), FOREIGN KEY(aihealue) REFERENCES Aihealueet(aihealue_id));");
+        lista.add("CREATE TABLE Viestit (viesti_id integer AUTO_INCREMENT, ketju integer, lahettaja varchar(50), viestiosa text, paivamaara date, PRIMARY KEY(viesti_id), FOREIGN KEY(ketju) REFERENCES Ketjut(ketju_id));");
 
         return lista;
     }
